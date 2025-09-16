@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gemini API Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #45a049; }
+        .error { color: red; background: #ffebee; padding: 10px; border-radius: 5px; }
+        .success { color: green; background: #e8f5e8; padding: 10px; border-radius: 5px; }
+        .log { background: #f5f5f5; padding: 10px; border-radius: 5px; font-family: monospace; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Gemini API Connection Test</h1>
+        
+        <button onclick="testAPI()">🔬 Test API Connection</button>
+        <button onclick="clearLog()">🗑️ Clear Log</button>
+        
+        <div id="result" style="margin-top: 20px;"></div>
+        <div id="log" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        const API_KEY = 'AIzaSyD_dG23Yn4klYkTAU3kLPPcSufukhJGoYw';
+        const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
+
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            logDiv.innerHTML += new Date().toLocaleTimeString() + ': ' + message + '\n';
+        }
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+            document.getElementById('result').innerHTML = '';
+        }
+
+        async function testAPI() {
+            document.getElementById('result').innerHTML = '<div style="color: blue;">🔄 Testing API connection...</div>';
+            log('Starting API test...');
+            log('API URL: ' + API_URL);
+            log('API Key (first 10 chars): ' + API_KEY.substring(0, 10) + '...');
+
+            try {
+                const requestBody = {
+                    contents: [{
+                        parts: [{ text: "Hello! Please respond with just 'API working correctly' to test the connection." }]
+                    }],
+                    generationConfig: {
+                        temperature: 0.1,
+                        maxOutputTokens: 50
+                    }
+                };
+
+                log('Request body: ' + JSON.stringify(requestBody, null, 2));
+
+                const response = await fetch(`${API_URL}?key=${API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                log('Response status: ' + response.status);
+                log('Response headers: ' + JSON.stringify([...response.headers], null, 2));
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    log('Error response: ' + errorText);
+                    throw new Error(`HTTP ${response.status}: ${errorText}`);
+                }
+
+                const data = await response.json();
+                log('Response data: ' + JSON.stringify(data, null, 2));
+
+                if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                    const botResponse = data.candidates[0].content.parts[0].text;
+                    document.getElementById('result').innerHTML = `<div class="success">✅ API Test Successful!<br>Response: "${botResponse}"</div>`;
+                    log('SUCCESS: API is working correctly');
+                } else {
+                    document.getElementById('result').innerHTML = '<div class="error">❌ Unexpected response format</div>';
+                    log('ERROR: Unexpected response format');
+                }
+
+            } catch (error) {
+                log('ERROR: ' + error.message);
+                document.getElementById('result').innerHTML = `<div class="error">❌ API Test Failed: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>

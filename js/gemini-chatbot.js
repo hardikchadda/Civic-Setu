@@ -4,7 +4,7 @@ class GeminiChatbot {
         this.botName = botName;
         this.conversationHistory = [];
         this.apiKey = this.getApiKey();
-        this.apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+        this.apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
     }
 
     getApiKey() {
@@ -104,11 +104,10 @@ class GeminiChatbot {
                 parts: [{ text: userMessage }]
             });
 
-            // Prepare the request
+            // Prepare the request with correct format
             const requestBody = {
                 contents: [
                     {
-                        role: "user",
                         parts: [{ 
                             text: `${this.systemPrompt}\n\nUser: ${userMessage}\n\nAssistant:` 
                         }]
@@ -119,6 +118,7 @@ class GeminiChatbot {
                     topK: 40,
                     topP: 0.95,
                     maxOutputTokens: 1024,
+                    stopSequences: []
                 },
                 safetySettings: [
                     {
@@ -172,13 +172,19 @@ class GeminiChatbot {
         } catch (error) {
             this.removeTypingIndicator(chatBoxId);
             console.error('Error calling Gemini API:', error);
+            console.error('API URL:', this.apiUrl);
+            console.error('API Key (first 10 chars):', this.apiKey ? this.apiKey.substring(0, 10) + '...' : 'NO KEY');
             
             if (error.message.includes('401') || error.message.includes('403')) {
-                this.addBotMessage("❌ API key issue. Please check your Gemini API key and try again.", chatBoxId);
+                this.addBotMessage("❌ API key issue. Please check your Gemini API key and try again. Error: " + error.message, chatBoxId);
                 localStorage.removeItem('GEMINI_API_KEY');
                 this.apiKey = null;
+            } else if (error.message.includes('400')) {
+                this.addBotMessage("❌ Bad request. There might be an issue with the message format. Error: " + error.message, chatBoxId);
+            } else if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                this.addBotMessage("❌ Network error. Please check your internet connection and try again.", chatBoxId);
             } else {
-                this.addBotMessage("Sorry, I'm having trouble connecting right now. Please try again in a moment.", chatBoxId);
+                this.addBotMessage(`Sorry, I'm having trouble connecting right now. Error: ${error.message}. Please try again in a moment.`, chatBoxId);
             }
         }
     }

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CivicSetu - Quick API Setup</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            background: white;
+            color: #333;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover { background: #45a049; }
+        .success { color: #4CAF50; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔑 CivicSetu API Setup</h1>
+        <p>Click the button below to automatically set up your Gemini API key for all chatbots:</p>
+        
+        <button onclick="setupAPI()">🚀 Setup API Key</button>
+        <button onclick="testChatbots()">✅ Test Chatbots</button>
+        <button onclick="clearAPI()">🗑️ Clear API Key</button>
+        
+        <div id="status" style="margin-top: 20px;"></div>
+        
+        <hr style="margin: 30px 0;">
+        <h3>Quick Links:</h3>
+        <a href="CivicSetu.html" style="display: inline-block; margin: 5px; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px;">🏠 Main Site</a>
+        <a href="T-1.html" style="display: inline-block; margin: 5px; padding: 10px 20px; background: #198754; color: white; text-decoration: none; border-radius: 5px;">💰 ISHWAR</a>
+        <a href="T-2.html" style="display: inline-block; margin: 5px; padding: 10px 20px; background: #dc3545; color: white; text-decoration: none; border-radius: 5px;">⚖️ JOLLY</a>
+    </div>
+
+    <script>
+        function setupAPI() {
+            const apiKey = 'AIzaSyD_dG23Yn4klYkTAU3kLPPcSufukhJGoYw';
+            localStorage.setItem('GEMINI_API_KEY', apiKey);
+            document.getElementById('status').innerHTML = '<div class="success">✅ API Key set successfully! All chatbots are now ready to use.</div>';
+        }
+        
+        function testChatbots() {
+            const apiKey = localStorage.getItem('GEMINI_API_KEY');
+            if (apiKey) {
+                document.getElementById('status').innerHTML = '<div class="success">✅ API Key is present. You can now use all chatbots!</div>';
+                // Open a chatbot for testing
+                setTimeout(() => {
+                    window.open('T-1.html', '_blank');
+                }, 1000);
+            } else {
+                document.getElementById('status').innerHTML = '<div style="color: red;">❌ No API Key found. Please click "Setup API Key" first.</div>';
+            }
+        }
+        
+        function clearAPI() {
+            localStorage.removeItem('GEMINI_API_KEY');
+            document.getElementById('status').innerHTML = '<div style="color: orange;">🗑️ API Key cleared. You will need to set it up again.</div>';
+        }
+    </script>
+</body>
+</html>
