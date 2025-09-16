@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AdhikarSetu Chatbot – SAMVIDHAN</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: linear-gradient(to right, #ff8a00, #e52e71);
+      color: #fff;
+    }
+
+    header {
+      background-color: #d63384;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .chat-container {
+      max-width: 600px;
+      margin: 30px auto;
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      color: #333;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    .chatbot-img {
+      display: block;
+      margin: 0 auto 20px;
+      width: 100px;
+      border-radius: 50%;
+    }
+
+    .chat-window {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 15px;
+      background: #f8f9fa;
+    }
+
+    .chat-bubble {
+      padding: 10px 15px;
+      background: #d63384;
+      color: white;
+      border-radius: 15px;
+      margin-bottom: 10px;
+      width: fit-content;
+      max-width: 80%;
+    }
+
+    .user-bubble {
+      background: #ff8a00;
+      align-self: flex-end;
+      margin-left: auto;
+    }
+
+    input[type="text"] {
+      width: 80%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      background: #d63384;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #b02a5b;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AdhikarSetu ⚖️ Chatbot – SAMVIDHAN</h1>
+    <p>Your guide to constitutional rights and civic duties</p>
+  </header>
+
+  <div class="chat-container">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaVvGxtWZBFVFtl4DP6vXfEw52OTpC0sDhHA&s" alt="SAMVIDHAN Bot" class="chatbot-img" />
+
+    <div class="chat-window" id="chatWindow">
+      <div class="chat-bubble">Namaskar! I'm <strong>SAMVIDHAN</strong> ⚖️. Ask me about your fundamental rights, RTI, petitions, and civic duties.</div>
+    </div>
+
+    <div style="display: flex; gap: 10px;">
+      <input type="text" id="userInput" placeholder="Ask about your rights or duties..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script src="js/gemini-chatbot.js"></script>
+  <script>
+    // Initialize SAMVIDHAN chatbot with specialized rights prompt
+    const samvidhanBot = new GeminiChatbot(
+      `You are SAMVIDHAN, a knowledgeable AI assistant for AdhikarSetu (Know Your Rights) at CivicSetu.
+      
+      Your expertise includes:
+      - Fundamental Rights (Articles 12-35 of Indian Constitution)
+      - Directive Principles of State Policy
+      - Fundamental Duties of citizens
+      - Right to Information (RTI) procedures
+      - Filing petitions and public interest litigation
+      - Constitutional remedies and writs
+      - Equality and anti-discrimination laws
+      - Freedom of speech and expression
+      - Right to privacy and data protection
+      - Electoral rights and voting procedures
+      - Consumer rights and protection
+      - Labor rights and workplace laws
+      - Environmental rights and protection
+      - Women's rights and gender equality
+      
+      Key Constitutional Articles:
+      - Article 14: Right to Equality
+      - Article 19: Freedom of Speech
+      - Article 21: Right to Life and Liberty
+      - Article 32: Right to Constitutional Remedies
+      - Article 51A: Fundamental Duties
+      
+      Guidelines:
+      - Explain constitutional concepts in simple terms
+      - Provide specific article numbers when relevant
+      - Help users understand their legal rights and remedies
+      - Guide on RTI filing procedures (rtionline.gov.in)
+      - Explain petition filing processes
+      - Include relevant court procedures and forums
+      - Emphasize both rights and corresponding duties
+      - If asked about non-constitutional topics, redirect to rights matters
+      
+      Remember: You're empowering citizens with knowledge of their constitutional rights and civic responsibilities.`,
+      "SAMVIDHAN"
+    );
+
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const message = input.value.trim();
+      
+      if (message === "") return;
+      
+      // Clear input immediately
+      input.value = "";
+      
+      // Send message to Gemini
+      samvidhanBot.sendMessage(message, "chatWindow");
+    }
+
+    // Allow Enter key to send message
+    document.getElementById("userInput").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        sendMessage();
+      }
+    });
+  </script>
+</body>
+</html>

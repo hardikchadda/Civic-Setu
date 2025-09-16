@@ -1,0 +1,424 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CivicSetu – Justice | Empowerment | Safety</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(to right, #0d6efd, #198754);
+      padding: 20px;
+      color: white;
+      text-align: center;
+    }
+
+    nav {
+      background: #343a40;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding: 10px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 10px 15px;
+      border-radius: 5px;
+    }
+
+    nav a:hover {
+      background-color: #198754;
+    }
+
+    .section {
+      display: none;
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .active {
+      display: block;
+    }
+
+    .hero {
+      background: url('https://source.unsplash.com/1600x500/?india,justice,technology') no-repeat center center/cover;
+      color: white;
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      margin: 0;
+    }
+
+    .button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      background-color: #ffc107;
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    h2 {
+      color: #198754;
+    }
+
+    footer {
+      background: #212529;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    .directory {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #007bff;
+    }
+
+    .card p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🌐 CivicSetu</h1>
+    <p>Justice. Opportunity. Safety. All in One.</p>
+  </header>
+
+  <nav>
+    <a href="#" onclick="showSection('home')">Home</a>
+    <a href="#" onclick="showSection('justice')">Justice Access</a>
+    <a href="#" onclick="showSection('empowerment')">Economic Empowerment</a>
+    <a href="#" onclick="showSection('training')">First Aid Training</a>
+    <a href="#" onclick="showSection('student')">Student Benefits</a>
+    <a href="#" onclick="showSection('sos')">SOS Support</a>
+    <a href="#" onclick="showSection('documentation')">Documentation Help</a>
+    <a href="#" onclick="showSection('adhikar')">Know Your Rights</a>
+  </nav>
+
+  <!-- Home Section -->
+  <div id="home" class="section active">
+    <div class="hero">
+     <h1 style="color: #198754;">Welcome to CivicSetu</h1>
+      <p style="color: blue;">Bridging citizens with justice, empowerment, and safety resources.</p>
+      <button class="button" onclick="showSection('justice')">Explore Now</button>
+    </div>
+  </div>
+
+  <!-- Justice Access -->
+  <div id="justice" class="section">
+    <h2>NyayaSetu</h2>
+    <p>We provide free legal aid guidance, access to public grievance mechanisms, Lok Adalats, and information on legal rights for all citizens.</p>
+    
+    <div class="directory">
+      <div class="card">
+        <h3>Adv. Meera Joshi</h3>
+        <p><strong>Contact:</strong> 9876543210</p>
+        <p><strong>Specialization:</strong> Women & Child Rights</p>
+      </div>
+      <div class="card">
+        <h3>Ravi Menon</h3>
+        <p><strong>Contact:</strong> 9123456789</p>
+        <p><strong>Specialization:</strong> RTI & Public Grievances</p>
+      </div>
+      <div class="card">
+        <h3>Sarita Bansal</h3>
+        <p><strong>Contact:</strong> 9988776655</p>
+        <p><strong>Specialization:</strong> Domestic Violence & Legal Aid</p>
+      </div>
+      <div class="card">
+        <h3>Adv. Tanmay Rao</h3>
+        <p><strong>Contact:</strong> 9090909090</p>
+        <p><strong>Specialization:</strong> SC/ST Atrocities & Legal Literacy</p>
+      </div>
+      <div class="card">
+        <h3>Priya Nair</h3>
+        <p><strong>Contact:</strong> 9871234567</p>
+        <p><strong>Specialization:</strong> Senior Citizen Rights</p>
+      </div>
+      <div class="card">
+        <h3>Adv. Arjun Dey</h3>
+        <p><strong>Contact:</strong> 9321456789</p>
+        <p><strong>Specialization:</strong> Police Complaint & FIR Process</p>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px;">
+      <h3>Talk to Our Legal Assistant – <strong>NyaySetu – JOLLY</strong></h3>
+      <a href="T-2.html" target="_blank" style="
+          background-color: #c82333;
+          color: white;
+          padding: 12px 24px;
+          text-decoration: none;
+          border-radius: 8px;
+          font-weight: bold;
+          display: inline-block;
+          margin-top: 10px;
+        ">
+        💬 Chat with JOLLY
+      </a>
+    </div>
+  </div>
+
+  <!-- Economic Empowerment -->
+  <div id="empowerment" class="section">
+    <h2>ArthSetu</h2>
+    <p>Discover employment opportunities, government schemes, women-led entrepreneurship resources, and training programs to become self-reliant.</p>
+
+    <div class="directory">
+      <div class="card">
+        <h3>PMKVY Skill Jobs</h3>
+        <p>Free training and job placement under the Pradhan Mantri Kaushal Vikas Yojana.</p>
+        <p><a href="https://www.ncs.gov.in" target="_blank">Visit NCS</a></p>
+      </div>
+      <div class="card">
+        <h3>e-Shram Jobs</h3>
+        <p>For unorganized sector workers – domestic, gig, daily wage, and more.</p>
+        <p><a href="https://eshram.gov.in" target="_blank">Register on e-Shram</a></p>
+      </div>
+      <div class="card">
+        <h3>Startup India</h3>
+        <p>Startup funding, mentorship, and incubation support for young entrepreneurs.</p>
+        <p><a href="https://www.startupindia.gov.in" target="_blank">Explore More</a></p>
+      </div>
+      <div class="card">
+        <h3>MUDRA Loans</h3>
+        <p>Loans up to ₹10 lakh for small and micro business owners.</p>
+      </div>
+      <div class="card">
+        <h3>Mahila E-Haat</h3>
+        <p>Marketplace for women to sell homemade and handcraft products.</p>
+        <p><a href="https://mahilaehaat-rmk.gov.in" target="_blank">Sell on E-Haat</a></p>
+      </div>
+      <div class="card">
+        <h3>Skill India Training</h3>
+        <p>Free technical & vocational training programs to boost employability.</p>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+      <h3>Need Personal Guidance?</h3>
+      <p>Talk to our virtual economic assistant – <strong>ArthSetu – ISHWAR</strong></p>
+      <a href="T-1.html" target="_blank" style="
+          background-color: #198754;
+          color: white;
+          padding: 12px 24px;
+          text-decoration: none;
+          border-radius: 8px;
+          font-weight: bold;
+          display: inline-block;
+          margin-top: 10px;
+        ">
+        💬 Chat with ISHWAR
+      </a>
+    </div>
+  </div>
+
+  <!-- First Aid Training -->
+  <div id="training" class="section">
+    <h2>SwasthyaSetu</h2>
+    <p>Get essential first aid training through video modules and downloadable resources to prepare for medical emergencies.</p>
+    <a href="FirstAidTraining.html" style="color: #0d6efd; font-weight: bold;">▶ View Full Training Page</a>
+
+    <h2>🧰 Materials Required for Basic First Aid</h2>
+    <div class="card">
+      <ul>
+        <li>Sterile gauze pads and bandages</li>
+        <li>Adhesive tape and plasters</li>
+        <li>Antiseptic wipes and cream</li>
+        <li>Scissors and tweezers</li>
+        <li>CPR face shield</li>
+        <li>Gloves (disposable, non-latex)</li>
+        <li>Digital thermometer</li>
+        <li>Burn gel or cooling dressing</li>
+        <li>Safety pins and triangular bandage</li>
+        <li>Emergency contact card and notepad</li>
+      </ul>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+      <h3>Chat with our Health Bot – <strong>SwasthyaSetu – MUNNA</strong></h3>
+      <a href="T-3.html" target="_blank" style="
+        background-color: #17a2b8;
+        color: white;
+        padding: 12px 24px;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;">
+        💬 Talk to MUNNA
+      </a>
+    </div>
+  </div>
+
+  <!-- Student Benefits -->
+  <div id="student" class="section">
+    <h2>VidyaSetu</h2>
+    <p>Explore scholarships, career counseling, mental health support, and educational helplines designed for school and college students.</p>
+    <a href="StudentBenefits.html">Student Benefits</a>
+
+    <div style="text-align: center; margin-top: 30px;">
+      <h3>Need Help? Talk to <strong>VidyaSetu – ISHAAN 🎓</strong></h3>
+      <a href="T-4.html" target="_blank" style="
+        background-color: #6610f2;
+        color: white;
+        padding: 12px 24px;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;">
+        💬 Chat with ISHAAN
+      </a>
+    </div>
+  </div>
+
+  <!-- SOS Support -->
+  <div id="sos" class="section">
+    <h2>RakshaSetu</h2>
+    <p>Access a one-tap emergency feature, helpline numbers for various distress categories, and location-sharing for quick help.</p>
+
+    <h2>Essential Helplines</h2>
+    <div class="card"><h3>Women Helpline</h3><p>📞 1091</p></div>
+    <div class="card"><h3>Police Control Room</h3><p>📞 100</p></div>
+    <div class="card"><h3>Ambulance Services</h3><p>📞 102 / 108</p></div>
+    <div class="card"><h3>Mental Health Support</h3><p>📞 9152987821 (NIMHANS Helpline)</p></div>
+    <div class="card"><h3>Childline</h3><p>📞 1098</p></div>
+
+    <h2>Location Sharing</h2>
+    <p>Your live location can be sent to trusted contacts in case of emergency. Please ensure location access is enabled on your device.</p>
+
+    <div style="text-align: center; margin-top: 30px;">
+      <h3>Need Help? Chat with <strong>RakshaSetu – SEHMAT 🛡</strong></h3>
+      <a href="T-5.html" target="_blank" style="
+        background-color: #dc3545;
+        color: white;
+        padding: 12px 24px;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;">
+        💬 Talk to SEHMAT
+      </a>
+    </div>
+  </div>
+
+  <!-- Documentation Help -->
+  <div id="documentation" class="section">
+    <h2>SahaySetu</h2>
+    <p>Step-by-step assistance for Aadhar, PAN, voter ID, caste/income certificates, and passport applications with multilingual guidance.</p>
+
+    <h2>Government Document Support</h2>
+    <div class="card"><h3>Aadhar Card</h3><p>Apply for Aadhar via UIDAI portal or enrollment centers. Carry valid address & ID proof.</p></div>
+    <div class="card"><h3>PAN Card</h3><p>Apply online through NSDL/UTIITSL websites. Required: ID proof, address proof, and photo.</p></div>
+    <div class="card"><h3>Voter ID</h3><p>Register through NVSP. Age 18+ with address proof and ID required.</p></div>
+    <div class="card"><h3>Caste / Income Certificate</h3><p>Apply at your state’s e-District portal or local office. Attach proof of caste/income and residence.</p></div>
+    <div class="card"><h3>Passport Application</h3><p>Apply at <a href="https://passportindia.gov.in" target="_blank">passportindia.gov.in</a>.</p></div>
+
+    <div style="text-align: center; margin-top: 30px;">
+      <h3>Need Assistance? Chat with <strong>SahaySetu – TARIQ 🧾</strong></h3>
+      <a href="T-6.html" target="_blank" style="
+        background-color: #6f42c1;
+        color: white;
+        padding: 12px 24px;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;">
+        💬 Talk to TARIQ
+      </a>
+    </div>
+  </div>
+
+  
+  
+  <script>
+    function showSection(id) {
+      const sections = document.querySelectorAll('.section');
+      sections.forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+  </script>
+  <!-- AdhikarSetu Section -->
+  <div id="adhikar" class="section">
+    <h2> AdhikarSetu</h2>
+    <p>This module empowers citizens to exercise their rights effectively. Learn about the Right to Information (RTI) and the process of filing Petitions against Government actions.</p>
+
+    <!-- RTI Section -->
+    <div class="card">
+      <h3>📄 Right to Information (RTI) </h3>
+      <p><strong>What?</strong> RTI allows any citizen to request information from a government office or department.</p>
+      <p><strong>Why?</strong> It ensures transparency and accountability in governance.</p>
+      <p><strong>How?</strong> File an RTI application online via <a href="https://rtionline.gov.in" target="_blank">RTI Online</a> or submit a written application to the concerned public authority with a ₹10 fee.</p>
+    </div>
+
+    <!-- Petition Section -->
+    <div class="card">
+      <h3>📝 Petition Against Government</h3>
+      <p><strong>What?</strong> A petition is a formal written request to a government authority seeking justice or policy change.</p>
+      <p><strong>Why?</strong> Citizens use petitions to raise collective concerns, challenge unjust laws, and influence governance.</p>
+      <p><strong>How?</strong> 
+        <ul>
+          <li>Draft a clear statement of grievance.</li>
+          <li>Gather supporting documents and public signatures.</li>
+          <li>Submit it to the concerned government department or online portals like <a href="https://pgportal.gov.in/" target="_blank">Centralized Public Grievance Redress And Monitoring System</a> or state grievance portals.</li>
+        </ul>
+      </p>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+      <h3>Need Constitutional Guidance? Chat with <strong>AdhikarSetu – SAMVIDHAN ⚖️</strong></h3>
+      <a href="T-7.html" target="_blank" style="
+        background-color: #d63384;
+        color: white;
+        padding: 12px 24px;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+        display: inline-block;
+        margin-top: 10px;
+      ">
+        💬 Talk to SAMVIDHAN
+      </a>
+    </div>
+  </div>
+<footer>
+    <p>&copy; 2025 CivicSetu. Empowering India with Justice and Safety.</p>
+  </footer>
+</body>
+</html>

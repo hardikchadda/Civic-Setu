@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ArthSetu – ISHWAR Chatbot</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #20c997, #0d6efd);
+      color: #333;
+    }
+
+    header {
+      background: #fff;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 5px solid #198754;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #198754;
+    }
+
+    .chatbot-container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .bot-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .bot-header img {
+      width: 70px;
+      height: 70px;
+      margin-right: 15px;
+      border-radius: 50%;
+      border: 2px solid #198754;
+    }
+
+    .bot-header h2 {
+      margin: 0;
+      color: #0d6efd;
+    }
+
+    .chat-box {
+      background: #f8f9fa;
+      height: 300px;
+      overflow-y: auto;
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+    }
+
+    .user-input {
+      display: flex;
+    }
+
+    .user-input input {
+      flex: 1;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 8px 0 0 8px;
+      border: 1px solid #ccc;
+    }
+
+    .user-input button {
+      padding: 12px 20px;
+      border: none;
+      background-color: #198754;
+      color: white;
+      font-weight: bold;
+      border-radius: 0 8px 8px 0;
+      cursor: pointer;
+    }
+
+    .user-input button:hover {
+      background-color: #157347;
+    }
+
+    footer {
+      text-align: center;
+      color: #fff;
+      padding: 20px;
+      background-color: #0d6efd;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>ArthSetu 🤝 Economic Empowerment</h1>
+    <p>Meet ISHWAR – Your Virtual Economic Assistant</p>
+  </header>
+
+  <div class="chatbot-container">
+    <div class="bot-header">
+      <img src="https://cdn-icons-png.flaticon.com/512/706/706797.png" alt="ISHWAR - Chatbot Avatar">
+      <h2>ISHWAR the Helper</h2>
+    </div>
+
+    <div class="chat-box" id="chatBox">
+      <p><strong>ISHWAR:</strong> Hello! I'm here to help you with employment opportunities, schemes, and training programs. How can I assist you today?</p>
+    </div>
+
+    <div class="user-input">
+      <input type="text" id="userInput" placeholder="Type your question here..." />
+      <button onclick="respond()">Send</button>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 CivicSetu – ArthSetu. Powered by ISHWAR.
+  </footer>
+
+  <script src="js/gemini-chatbot.js"></script>
+  <script>
+    // Initialize ISHWAR chatbot with specialized prompt
+    const ishwarBot = new GeminiChatbot(
+      `You are ISHWAR, a helpful AI assistant for ArthSetu (Economic Empowerment) at CivicSetu. 
+      
+      Your expertise includes:
+      - Employment opportunities and job searches
+      - Government schemes like PMEGP, Mudra Yojana, Start-Up India
+      - Skill development programs (PMKVY, Skill India)
+      - Women entrepreneurship (Mahila E-Haat)
+      - Small business loans and funding
+      - E-Shram registration for unorganized workers
+      - Economic empowerment for marginalized communities
+      - Financial literacy and planning
+      
+      Guidelines:
+      - Be encouraging and supportive
+      - Provide practical, actionable advice
+      - Include specific program names and websites when relevant
+      - Help users understand eligibility criteria
+      - Use simple Hindi/English terms that common people understand
+      - Always maintain a positive, empowering tone
+      - If asked about topics outside your domain, politely redirect to economic matters
+      
+      Remember: You're helping people achieve financial independence and economic empowerment in India.`,
+      "ISHWAR"
+    );
+
+    function respond() {
+      const userInput = document.getElementById("userInput");
+      const userMessage = userInput.value.trim();
+      if (!userMessage) return;
+
+      // Clear input immediately
+      userInput.value = "";
+      
+      // Send message to Gemini
+      ishwarBot.sendMessage(userMessage, "chatBox");
+    }
+
+    // Allow Enter key to send message
+    document.getElementById("userInput").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        respond();
+      }
+    });
+  </script>
+</body>
+</html>

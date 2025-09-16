@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Benefits – CivicSetu</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(to right, #0d6efd, #198754);
+      padding: 20px;
+      color: white;
+      text-align: center;
+    }
+
+    h2 {
+      color: #198754;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .section {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    .section h3 {
+      color: #0d6efd;
+      margin-top: 0;
+    }
+
+    .section ul {
+      padding-left: 20px;
+    }
+
+    .section li {
+      margin-bottom: 8px;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .back-link a {
+      background-color: #0d6efd;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back-link a:hover {
+      background-color: #0b5ed7;
+    }
+
+    footer {
+      background: #212529;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🎓 Student Benefits – CivicSetu</h1>
+    <p>Support and Opportunities for School and College Students</p>
+  </header>
+
+  <div class="container">
+
+    <div class="section">
+      <h3>🎁 Scholarships</h3>
+      <ul>
+        <li>National Scholarship Portal (NSP) – Government-funded aid for students from various backgrounds</li>
+        <li>Kishore Vaigyanik Protsahan Yojana (KVPY) – For science stream students</li>
+        <li>INSPIRE Scholarship – For Class 11–12 and UG Science students</li>
+        <li>Post-Matric Scholarship for SC/ST/OBC Students</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3>🔬 Career Counseling</h3>
+      <ul>
+        <li>Free one-on-one counseling sessions with career advisors</li>
+        <li>Career assessment tests to identify strengths and interests</li>
+        <li>Webinars by industry professionals and alumni</li>
+        <li>Guidance on entrance exams, competitive prep, and application planning</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3>🫈 Mental Health Support</h3>
+      <ul>
+        <li>Confidential counseling sessions by certified professionals</li>
+        <li>24x7 Student Mental Health Helpline: 1800-111-988</li>
+        <li>Workshops on stress management, anxiety, exam pressure</li>
+        <li>Downloadable self-care resources and exercises</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3>📖 Educational Helplines</h3>
+      <ul>
+        <li>CBSE Helpline: 1800-11-8002 (Exam & Result queries)</li>
+        <li>AICTE Student Support: 1800-11-6742</li>
+        <li>UGC Helpline: 1800-180-5522 (Higher education queries)</li>
+        <li>CivicSetu Learning Support Volunteers: support@civicsetu.in</li>
+      </ul>
+    </div>
+
+    <div class="back-link">
+      <a href="CIVICSETU1.html" onclick="C:\Users\Aarna Dayal\OneDrive\Desktop\NSC DSC\SciHi\CivicSetu\CIVICSETU1.html('goTo','student')">⬅️ Back to CivicSetu</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 CivicSetu. Empowering students through support and awareness.</p>
+  </footer>
+
+  <script>
+    const goTo = localStorage.getItem('goTo');
+    if (goTo) {
+      localStorage.removeItem('goTo');
+      window.location.href = `index.html#${goTo}`;
+    }
+  </script>
+</body>
+</html>

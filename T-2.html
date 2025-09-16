@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NyaySetu Chatbot – JOLLY</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: linear-gradient(to right, #f12711, #f5af19);
+      color: #333;
+    }
+
+    header {
+      background-color: #c82333;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .chat-container {
+      max-width: 600px;
+      margin: 30px auto;
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    .chatbot-img {
+      display: block;
+      margin: 0 auto 20px;
+      width: 100px;
+      border-radius: 50%;
+    }
+
+    .chat-window {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 15px;
+      background: #f8f9fa;
+    }
+
+    .chat-bubble {
+      padding: 10px 15px;
+      background: #c82333;
+      color: white;
+      border-radius: 15px;
+      margin-bottom: 10px;
+      width: fit-content;
+      max-width: 80%;
+    }
+
+    .user-bubble {
+      background: #f5af19;
+      color: #000;
+      align-self: flex-end;
+      margin-left: auto;
+    }
+
+    input[type="text"] {
+      width: 80%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      background: #c82333;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #a71d2a;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>NyaySetu 🤝 Chatbot – JOLLY</h1>
+    <p>Your legal companion for justice access</p>
+  </header>
+
+  <div class="chat-container">
+    <img src="https://cdn.vectorstock.com/i/1000v/24/58/female-judge-cartoon-character-vector-37502458.jpg" alt="JOLLY" class="chatbot-img" />
+    
+    <div class="chat-window" id="chatWindow">
+      <div class="chat-bubble">Hello! I’m <strong>JOLLY</strong> 👩‍⚖️. How can I help you with legal aid, rights, or justice access today?</div>
+    </div>
+
+    <div style="display: flex; gap: 10px;">
+      <input type="text" id="userInput" placeholder="Type your question here..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script src="js/gemini-chatbot.js"></script>
+  <script>
+    // Initialize JOLLY chatbot with specialized legal prompt
+    const jollyBot = new GeminiChatbot(
+      `You are JOLLY, a knowledgeable AI legal assistant for NyaySetu (Justice Access) at CivicSetu.
+      
+      Your expertise includes:
+      - Legal aid and free legal services
+      - RTI (Right to Information) process
+      - Filing FIR and police complaints
+      - Women and child rights protection
+      - SC/ST rights and atrocity cases
+      - Domestic violence legal procedures
+      - Public grievance mechanisms
+      - Lok Adalat processes
+      - Legal literacy and citizen rights
+      - Court procedures and documentation
+      - Bail and legal custody matters
+      - Property and family law basics
+      
+      Guidelines:
+      - Provide accurate legal information but remind users you're not a licensed lawyer
+      - Always suggest consulting qualified legal professionals for complex cases
+      - Include relevant helpline numbers (15100 for legal aid, 100 for police)
+      - Explain legal processes in simple terms
+      - Be empathetic, especially for sensitive cases
+      - Emphasize constitutional rights and legal remedies available
+      - If asked about non-legal topics, politely redirect to legal matters
+      
+      Important: Always add disclaimer that this is general legal information, not professional legal advice.`,
+      "JOLLY"
+    );
+
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const message = input.value.trim();
+      
+      if (message === "") return;
+      
+      // Clear input immediately
+      input.value = "";
+      
+      // Send message to Gemini
+      jollyBot.sendMessage(message, "chatWindow");
+    }
+
+    // Allow Enter key to send message
+    document.getElementById("userInput").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        sendMessage();
+      }
+    });
+  </script>
+</body>
+</html>
