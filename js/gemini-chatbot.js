@@ -4,7 +4,7 @@ class GeminiChatbot {
         this.botName = botName;
         this.conversationHistory = [];
         this.apiKey = this.getApiKey();
-        this.apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
+        this.apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
     }
 
     getApiKey() {
@@ -157,7 +157,17 @@ class GeminiChatbot {
             const data = await response.json();
             
             if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-                const botResponse = data.candidates[0].content.parts[0].text;
+                let botResponse = data.candidates[0].content.parts[0].text;
+                
+                // Clean up formatting - remove excessive markdown
+                botResponse = botResponse
+                    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>') // Convert **text** to <strong>
+                    .replace(/\*([^*]+)\*/g, '<em>$1</em>') // Convert *text* to <em>
+                    .replace(/\n\n/g, '<br><br>') // Convert double newlines to breaks
+                    .replace(/\n/g, '<br>') // Convert single newlines to breaks
+                    .replace(/- /g, '• ') // Convert - to bullet points
+                    .trim();
+                
                 this.addBotMessage(botResponse, chatBoxId);
                 
                 // Add bot response to conversation history

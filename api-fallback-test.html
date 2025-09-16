@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gemini API Fallback Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f0f2f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #45a049; }
+        .error { color: red; background: #ffebee; padding: 10px; border-radius: 5px; margin: 5px 0; }
+        .success { color: green; background: #e8f5e8; padding: 10px; border-radius: 5px; margin: 5px 0; }
+        .warning { color: orange; background: #fff3e0; padding: 10px; border-radius: 5px; margin: 5px 0; }
+        .log { background: #f5f5f5; padding: 10px; border-radius: 5px; font-family: monospace; white-space: pre-wrap; max-height: 400px; overflow-y: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Gemini API Fallback Test</h1>
+        
+        <button onclick="testAllEndpoints()">🚀 Test All Endpoints</button>
+        <button onclick="clearLog()">🗑️ Clear Log</button>
+        
+        <div id="results" style="margin-top: 20px;"></div>
+        <div id="log" class="log" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        const API_KEY = 'AIzaSyD_dG23Yn4klYkTAU3kLPPcSufukhJGoYw';
+        
+        const endpoints = [
+            'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',
+            'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent',
+            'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
+            'https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent'
+        ];
+
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            logDiv.innerHTML += new Date().toLocaleTimeString() + ': ' + message + '\n';
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+            document.getElementById('results').innerHTML = '';
+        }
+
+        async function testEndpoint(apiUrl, index) {
+            log(`\n=== Testing Endpoint ${index + 1}/${endpoints.length} ===`);
+            log('URL: ' + apiUrl);
+            
+            try {
+                const requestBody = {
+                    contents: [{
+                        parts: [{ text: "Say 'Hello! API endpoint working.' and nothing else." }]
+                    }],
+                    generationConfig: {
+                        temperature: 0.1,
+                        maxOutputTokens: 20
+                    }
+                };
+
+                const response = await fetch(`${apiUrl}?key=${API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                log('Response status: ' + response.status);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    log('Error: ' + errorText);
+                    return { success: false, error: `HTTP ${response.status}: ${errorText}`, url: apiUrl };
+                }
+
+                const data = await response.json();
+                
+                if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                    const botResponse = data.candidates[0].content.parts[0].text;
+                    log('SUCCESS: ' + botResponse);
+                    return { success: true, response: botResponse, url: apiUrl };
+                } else {
+                    log('ERROR: Unexpected response format');
+                    return { success: false, error: 'Unexpected response format', url: apiUrl };
+                }
+
+            } catch (error) {
+                log('EXCEPTION: ' + error.message);
+                return { success: false, error: error.message, url: apiUrl };
+            }
+        }
+
+        async function testAllEndpoints() {
+            document.getElementById('results').innerHTML = '<div style="color: blue;">🔄 Testing all endpoints...</div>';
+            log('Starting comprehensive API test...');
+            log('API Key (first 10 chars): ' + API_KEY.substring(0, 10) + '...');
+            
+            const results = [];
+            
+            for (let i = 0; i < endpoints.length; i++) {
+                const result = await testEndpoint(endpoints[i], i);
+                results.push(result);
+                
+                // Small delay between requests
+                await new Promise(resolve => setTimeout(resolve, 500));
+            }
+            
+            // Display summary
+            let html = '<h3>📊 Test Results:</h3>';
+            let workingEndpoints = [];
+            
+            results.forEach((result, index) => {
+                if (result.success) {
+                    html += `<div class="success">✅ Endpoint ${index + 1}: WORKING<br>URL: ${result.url}<br>Response: "${result.response}"</div>`;
+                    workingEndpoints.push(result.url);
+                } else {
+                    html += `<div class="error">❌ Endpoint ${index + 1}: FAILED<br>URL: ${result.url}<br>Error: ${result.error}</div>`;
+                }
+            });
+            
+            if (workingEndpoints.length > 0) {
+                html += `<div class="success"><h4>🎉 Good News!</h4>Found ${workingEndpoints.length} working endpoint(s). Your API key is valid!</div>`;
+                html += '<div class="warning"><h4>🔧 Next Steps:</h4>I\'ll update the chatbot to use the working endpoint.</div>';
+            } else {
+                html += '<div class="error"><h4>❌ All endpoints failed</h4>This suggests an issue with your API key or network. Please:<br>1. Verify your API key at <a href="https://ai.google.dev/" target="_blank">Google AI Studio</a><br>2. Check your internet connection<br>3. Try from a different network</div>';
+            }
+            
+            document.getElementById('results').innerHTML = html;
+            
+            log('\n=== SUMMARY ===');
+            log(`Working endpoints: ${workingEndpoints.length}`);
+            log(`Failed endpoints: ${results.length - workingEndpoints.length}`);
+            
+            return workingEndpoints;
+        }
+    </script>
+</body>
+</html>
