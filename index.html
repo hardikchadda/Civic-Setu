@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CivicSetu – Login</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #0d6efd, #198754);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: #333;
+    }
+
+    .login-box {
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .login-box h2 {
+      margin-bottom: 20px;
+      color: #0d6efd;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"], input[type="tel"], input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      background-color: #198754;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #157347;
+    }
+
+    .note {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 15px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-box">
+    <h2>Login to CivicSetu</h2>
+    <form>
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+
+      <button type="button" onclick="sendOTP()">Send OTP</button>
+
+      <div id="otpSection" style="display:none;">
+        <label for="otp">Enter OTP</label>
+        <input type="number" id="otp" name="otp" placeholder="Enter OTP here" required>
+       <button type="button" onclick="login()">Login</button>
+      </div>
+    </form>
+
+    <p class="note">Your information is safe with CivicSetu 🔒</p>
+  </div>
+
+ <script>
+  function sendOTP() {
+    const otpSection = document.getElementById('otpSection');
+    alert("OTP sent to your phone number (demo only).");
+    otpSection.style.display = 'block';
+  }
+
+  function login() {
+    alert("Login successful! Redirecting to CivicSetu...");
+    window.location.href = "CIVICSETU1.html";   }
+</script>
+
+</body>
+</html>
