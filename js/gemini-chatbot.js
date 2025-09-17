@@ -45,21 +45,32 @@ class GeminiChatbot {
 
         modalContent.innerHTML = `
             <h3>🔑 Gemini API Key Required</h3>
-            <p>To use this chatbot, you need a free Gemini API key:</p>
-            <ol style="text-align: left; margin: 20px 0;">
+            <p>To use this chatbot, you need a Gemini API key. For quick access, you can use this demo key:</p>
+            
+            <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 5px; padding: 15px; margin: 15px 0; text-align: center;">
+                <strong style="color: #198754;">Demo API Key (Ready to Use):</strong><br>
+                <code style="background: white; padding: 5px; border-radius: 3px; font-size: 12px; word-break: break-all; display: inline-block; margin: 5px 0; border: 1px solid #ccc;">AIzaSyD_dG23Yn4klYkTAU3kLPPcSufukhJGoYw</code><br>
+                <button onclick="document.getElementById('apiKeyInput').value='AIzaSyD_dG23Yn4klYkTAU3kLPPcSufukhJGoYw'" 
+                        style="background: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 3px; font-size: 12px; cursor: pointer; margin-top: 5px;">
+                    📋 Copy to Input
+                </button>
+            </div>
+            
+            <p><strong>Or get your own free key:</strong></p>
+            <ol style="text-align: left; margin: 10px 0; font-size: 14px;">
                 <li>Visit <a href="https://ai.google.dev/" target="_blank">Google AI Studio</a></li>
-                <li>Sign in with your Google account</li>
-                <li>Click "Get API Key" and create a new key</li>
+                <li>Sign in → Click "Get API Key" → Create new key</li>
                 <li>Copy and paste it below</li>
             </ol>
-            <input type="password" id="apiKeyInput" placeholder="Paste your Gemini API key here" 
-                   style="width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px;">
+            
+            <input type="text" id="apiKeyInput" placeholder="Paste API key here (or use demo key above)" 
+                   style="width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; font-family: monospace;">
             <br>
             <button onclick="this.saveApiKey()" style="background: #198754; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">
-                Save & Continue
+                ✅ Save & Continue
             </button>
             <button onclick="this.closeModal()" style="background: #6c757d; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">
-                Cancel
+                ❌ Cancel
             </button>
             <p style="font-size: 12px; color: #666; margin-top: 15px;">
                 🔒 Your API key is stored locally in your browser and never shared.
