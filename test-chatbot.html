@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .chat-box {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+        }
+        .input-container {
+            display: flex;
+            gap: 10px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .debug {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Chatbot Test</h1>
+    
+    <div class="chat-box" id="testChatBox">
+        <p><strong>Test Bot:</strong> Hello! This is a test chatbot. Try sending a message to test the API.</p>
+    </div>
+    
+    <div class="input-container">
+        <input type="text" id="testInput" placeholder="Type your test message..." />
+        <button onclick="testMessage()">Send</button>
+        <button onclick="clearStorage()">Clear API Key</button>
+    </div>
+    
+    <div class="debug">
+        <strong>Debug Info:</strong><br>
+        <span id="debugInfo">Ready to test...</span>
+    </div>
+
+    <script src="js/gemini-chatbot.js"></script>
+    <script>
+        // Initialize test chatbot
+        const testBot = new GeminiChatbot(
+            "You are a helpful test assistant. Give short, friendly responses to test the API connection.",
+            "Test Bot"
+        );
+
+        function updateDebug(message) {
+            document.getElementById('debugInfo').innerHTML += '<br>' + message;
+        }
+
+        function testMessage() {
+            const input = document.getElementById('testInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            updateDebug('Attempting to send: ' + message);
+            input.value = '';
+            
+            testBot.sendMessage(message, 'testChatBox');
+        }
+
+        function clearStorage() {
+            localStorage.removeItem('GEMINI_API_KEY');
+            updateDebug('Cleared API key from localStorage');
+        }
+
+        // Allow Enter key to send message
+        document.getElementById('testInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                testMessage();
+            }
+        });
+
+        // Check initial state
+        const storedKey = localStorage.getItem('GEMINI_API_KEY');
+        updateDebug('Stored API key: ' + (storedKey ? storedKey.substring(0, 10) + '...' : 'None'));
+    </script>
+</body>
+</html>

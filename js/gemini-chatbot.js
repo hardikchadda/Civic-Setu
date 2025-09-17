@@ -20,7 +20,14 @@ class GeminiChatbot {
     }
 
     showApiKeyModal() {
+        // Check if modal already exists
+        if (document.getElementById('gemini-api-modal')) {
+            console.log('API key modal already exists');
+            return;
+        }
+        
         const modal = document.createElement('div');
+        modal.id = 'gemini-api-modal';
         modal.style.cssText = `
             position: fixed;
             top: 0;
@@ -50,7 +57,7 @@ class GeminiChatbot {
             <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 5px; padding: 15px; margin: 15px 0; text-align: center;">
                 <strong style="color: #198754;">Demo API Key (Ready to Use):</strong><br>
                 <code style="background: white; padding: 5px; border-radius: 3px; font-size: 12px; word-break: break-all; display: inline-block; margin: 5px 0; border: 1px solid #ccc;">AIzaSyD_dG23Yn4klYkTAU3kLPPcSufukhJGoYw</code><br>
-                <button onclick="document.getElementById('apiKeyInput').value='AIzaSyD_dG23Yn4klYkTAU3kLPPcSufukhJGoYw'" 
+                <button id="copyToInputBtn" 
                         style="background: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 3px; font-size: 12px; cursor: pointer; margin-top: 5px;">
                     📋 Copy to Input
                 </button>
@@ -66,10 +73,10 @@ class GeminiChatbot {
             <input type="text" id="apiKeyInput" placeholder="Paste API key here (or use demo key above)" 
                    style="width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; font-family: monospace;">
             <br>
-            <button onclick="this.saveApiKey()" style="background: #198754; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">
+            <button id="saveApiKeyBtn" style="background: #198754; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">
                 ✅ Save & Continue
             </button>
-            <button onclick="this.closeModal()" style="background: #6c757d; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">
+            <button id="cancelApiKeyBtn" style="background: #6c757d; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">
                 ❌ Cancel
             </button>
             <p style="font-size: 12px; color: #666; margin-top: 15px;">
@@ -80,30 +87,70 @@ class GeminiChatbot {
         modal.appendChild(modalContent);
         document.body.appendChild(modal);
 
-        // Add event listeners
-        modalContent.querySelector('button').onclick = () => {
+        // Add event listeners with proper scope binding
+        const copyButton = modalContent.querySelector('#copyToInputBtn');
+        const saveButton = modalContent.querySelector('#saveApiKeyBtn');
+        const cancelButton = modalContent.querySelector('#cancelApiKeyBtn');
+        
+        // Fix the copy button
+        if (copyButton) {
+            copyButton.onclick = () => {
+                document.getElementById('apiKeyInput').value = 'AIzaSyD_dG23Yn4klYkTAU3kLPPcSufukhJGoYw';
+            };
+        }
+        
+        // Save button handler
+        saveButton.onclick = () => {
             const apiKey = document.getElementById('apiKeyInput').value.trim();
             if (apiKey) {
                 localStorage.setItem('GEMINI_API_KEY', apiKey);
                 this.apiKey = apiKey;
                 document.body.removeChild(modal);
-                this.addBotMessage("✅ API key saved! You can now start chatting.");
+                console.log('✅ API key saved successfully!');
+                
+                // If there's a pending message, retry it
+                if (this.pendingMessage && this.pendingChatBoxId) {
+                    console.log('Retrying pending message...');
+                    this.sendMessage(this.pendingMessage, this.pendingChatBoxId);
+                    this.pendingMessage = null;
+                    this.pendingChatBoxId = null;
+                }
             } else {
                 alert('Please enter a valid API key.');
             }
         };
 
-        modalContent.querySelectorAll('button')[1].onclick = () => {
+        // Cancel button handler
+        cancelButton.onclick = () => {
             document.body.removeChild(modal);
-            this.addBotMessage("❌ API key required to use this chatbot. Click 'Send' again to retry.");
+            console.log('❌ API key setup cancelled.');
         };
+        
+        // Auto-fill the demo key on modal load
+        setTimeout(() => {
+            const input = document.getElementById('apiKeyInput');
+            if (input) {
+                input.value = 'AIzaSyD_dG23Yn4klYkTAU3kLPPcSufukhJGoYw';
+            }
+        }, 100);
     }
 
     async sendMessage(userMessage, chatBoxId) {
+        // Check for API key again in case it was just saved
         if (!this.apiKey) {
+            this.apiKey = localStorage.getItem('GEMINI_API_KEY');
+        }
+        
+        if (!this.apiKey) {
+            console.log('No API key found, showing modal...');
+            // Store the pending message to retry after API key is saved
+            this.pendingMessage = userMessage;
+            this.pendingChatBoxId = chatBoxId;
             this.showApiKeyModal();
             return;
         }
+        
+        console.log('API key found, proceeding with message...', this.apiKey.substring(0, 10) + '...');
 
         try {
             this.addUserMessage(userMessage, chatBoxId);
@@ -151,6 +198,7 @@ class GeminiChatbot {
                 ]
             };
 
+            console.log('Sending request to Gemini API...');
             const response = await fetch(`${this.apiUrl}?key=${this.apiKey}`, {
                 method: 'POST',
                 headers: {
@@ -162,10 +210,13 @@ class GeminiChatbot {
             this.removeTypingIndicator(chatBoxId);
 
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                const errorText = await response.text();
+                console.error('API Error Response:', errorText);
+                throw new Error(`HTTP error! status: ${response.status}, response: ${errorText}`);
             }
 
             const data = await response.json();
+            console.log('API Response:', data);
             
             if (data.candidates && data.candidates[0] && data.candidates[0].content) {
                 let botResponse = data.candidates[0].content.parts[0].text;
